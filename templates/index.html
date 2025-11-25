@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJU AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="main-layout">
+    <div class="sidebar">
+        <div>
+            <a href="/" class="brand">🎓 MJU AI Assistant</a>
+            <div class="menu-section">
+                <h3>Quick Links</h3>
+                <nav class="nav-links">
+                    <a href="https://www.mju.ac.kr/mjukr/index.do" target="_blank" class="nav-item">🏛️ 학교 홈페이지</a>
+                    <a href="https://cs.mju.ac.kr/cs/index.do" target="_blank" class="nav-item">💻 컴퓨터공학과</a>
+                    <a href="https://lms.mju.ac.kr/ilos/main/main_form.acl" target="_blank" class="nav-item">📚 이러닝 (LMS)</a>
+                    <a href="https://portal.mju.ac.kr/p/S00/" target="_blank" class="nav-item">🔐 마이아이웹 (포털)</a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            {% if user %}
+                <div class="user-profile">
+                    <img src="{{ user.picture }}" alt="Profile">
+                    <div style="font-weight: bold; font-size: 14px; margin-bottom: 3px;">{{ user.name }}님</div>
+                    <div style="font-size: 11px; opacity: 0.7;">환영합니다! 👋</div>
+                </div>
+                <button class="footer-btn" onclick="location.href='/logout'" style="background-color: #ff4d4f; border-color: #ff4d4f; margin-bottom: 8px;">🚪 로그아웃</button>
+            {% else %}
+                <button class="footer-btn" onclick="location.href='/login'" style="background-color: white; color: #002F6C; font-weight: bold; margin-bottom: 8px;">
+                    <span style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <svg width="16" height="16" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"></path><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.715H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"></path><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"></path><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.159 6.656 3.58 9 3.58z" fill="#EA4335"></path></svg>
+                        Google 로그인
+                    </span>
+                </button>
+            {% endif %}
+            <button class="footer-btn" onclick="alert('문의 메일: mju_student@mju.ac.kr')">👨‍💻 개발자 문의하기</button>
+        </div>
+    </div>
+
+    <div class="chat-section">
+        <div class="chat-header">
+            <h2>실시간 공지사항 봇</h2>
+            <p>궁금한 공지사항을 물어보면 홈페이지에서 찾아올게요!</p>
+        </div>
+
+        <div class="chat-box" id="chat-box">
+            <div class="message bot">
+                👋 안녕하세요! <b>명지대 AI 어시스턴트</b>입니다.<br><br>
+                왼쪽 사이드바에서 학교 주요 사이트로 바로 이동할 수도 있고,<br>
+                여기서 대화로 공지사항을 검색할 수도 있어요.<br><br>
+                💡<b>이렇게 물어보세요:</b><br>
+                - "오늘 일반 공지사항 뭐야?"<br>
+                - "장학금 관련 공지 있어?"<br>
+                - "학사 일정이나 졸업 공지 보여줘"<br>
+                - "취업이나 인턴 정보 알려줘"
+            </div>
+        </div>
+        
+        <div class="typing-indicator" id="loading">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="질문을 입력하세요..." autocomplete="off" onkeypress="if(event.keyCode==13) sendMessage()">
+            <button onclick="sendMessage()" class="send-btn" id="send-btn">
+                <svg class="send-icon" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

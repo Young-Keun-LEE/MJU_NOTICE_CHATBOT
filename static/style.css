@@ -1,0 +1,206 @@
+/* static/style.css */
+
+/* [기본 설정] */
+* { box-sizing: border-box; }
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #eef1f5;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+}
+
+/* [메인 레이아웃] */
+.main-layout {
+    display: flex;
+    width: 1200px;
+    height: 85vh;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+/* [좌측 사이드바 - 컴팩트 모드] */
+.sidebar {
+    width: 260px;
+    background-color: #002F6C; /* 명지대 네이비 */
+    color: white;
+    padding: 25px 18px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; 
+    overflow: hidden;
+}
+
+.brand {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-section { flex: 1; }
+
+.menu-section h3 {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.85);
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    transition: all 0.2s;
+}
+.nav-item:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    transform: translateX(3px);
+}
+
+/* 사이드바 하단 */
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+    text-align: center;
+    width: 100%;
+}
+.footer-btn:hover { background-color: white; color: #002F6C; }
+
+.user-profile {
+    background: rgba(255,255,255,0.1);
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 8px;
+}
+.user-profile img {
+    width: 45px; height: 45px;
+    border-radius: 50%; border: 2px solid white; margin-bottom: 5px;
+}
+
+/* [우측 채팅 섹션] */
+.chat-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    min-width: 0; 
+}
+
+.chat-header {
+    padding: 18px 30px;
+    border-bottom: 1px solid #eee;
+    background-color: white;
+}
+.chat-header h2 { margin: 0; font-size: 18px; color: #333; }
+.chat-header p { margin: 4px 0 0; font-size: 13px; color: #888; }
+
+.chat-box {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background-color: #F8F9FA;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.message {
+    max-width: 75%;
+    padding: 12px 18px;
+    border-radius: 18px;
+    font-size: 15px;
+    line-height: 1.5;
+    word-break: break-word;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+.bot { background-color: white; border-top-left-radius: 2px; color: #333; }
+.user { background-color: #002F6C; border-top-right-radius: 2px; color: white; align-self: flex-end; }
+.bot::before { content: "🤖 MJU AI"; display: block; font-size: 11px; color: #002F6C; font-weight: bold; margin-bottom: 5px; }
+
+/* 마크다운 스타일 */
+.message a { color: #007AFF; font-weight: bold; text-decoration: none; }
+.message ul { padding-left: 20px; margin: 5px 0; }
+.message p { margin: 0 0 8px 0; }
+.message p:last-child { margin: 0; }
+
+/* 입력 영역 */
+.input-area {
+    padding: 15px 30px;
+    background-color: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+input {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    outline: none;
+    background: #F8F9FA;
+}
+input:focus { border-color: #002F6C; background: white; }
+
+.send-btn {
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    background-color: #002F6C;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    flex-shrink: 0;
+}
+.send-btn:hover { transform: scale(1.1); }
+.send-icon { width: 18px; height: 18px; fill: white; margin-left: 2px; }
+
+/* 로딩 애니메이션 */
+.typing-indicator { display: none; padding: 12px 18px; background: white; border-radius: 18px; border-top-left-radius: 2px; width: fit-content; margin-bottom: 20px; }
+.dot { height: 7px; width: 7px; background: #bbb; border-radius: 50%; display: inline-block; animation: bounce 1.3s infinite; }
+.dot:nth-child(2) { animation-delay: 0.2s; } .dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
