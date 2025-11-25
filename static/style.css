@@ -1,42 +1,85 @@
-/* static/style.css - Mobile Height Fix */
+/**
+ * static/style.css
+ * * Global Stylesheet for MJU AI Assistant.
+ * Implements a responsive dashboard layout with a focus on mobile compatibility.
+ * * Structure:
+ * 1. Variables & Reset
+ * 2. Layout Structure (Main, Sidebar, Chat)
+ * 3. Components (Buttons, Inputs, Messages)
+ * 4. Utilities & Animations
+ * 5. Responsive Design (Mobile)
+ */
 
-/* [기본 설정] */
-* { box-sizing: border-box; }
+/* -------------------------------------------------------------------------
+   1. CSS Variables & Reset
+   ------------------------------------------------------------------------- */
+:root {
+    /* Color Palette */
+    --primary-color: #002F6C;       /* MJU Official Navy */
+    --primary-hover: #001f4d;
+    --accent-color: #007AFF;        /* Link Blue */
+    --bg-body: #eef1f5;             /* Light Grey Background */
+    --bg-chat: #F8F9FA;             /* Chat Area Background */
+    --bg-white: #ffffff;
+    
+    /* Text Colors */
+    --text-main: #333333;
+    --text-sub: #888888;
+    --text-white: #ffffff;
+    
+    /* Spacing & Dimensions */
+    --sidebar-width: 260px;
+    --border-radius-lg: 20px;
+    --border-radius-md: 18px;
+    --border-radius-sm: 8px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #eef1f5;
+    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-body);
     margin: 0;
-    /* [핵심 수정 1] vh 대신 dvh 사용 (모바일 주소창 대응) */
-    height: 100dvh; 
+    
+    /* [Critical Fix for Mobile] Use 'dvh' to exclude browser URL bar height */
+    height: 100dvh;
     width: 100vw;
+    
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* 전체 스크롤 방지 */
+    overflow: hidden; /* Prevent body scroll */
 }
 
-/* [메인 레이아웃] */
+/* -------------------------------------------------------------------------
+   2. Layout Structure
+   ------------------------------------------------------------------------- */
 .main-layout {
     display: flex;
     width: 1200px;
-    height: 85vh; /* PC에서는 85%가 예쁨 */
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    height: 85vh; /* 85% height on Desktop looks balanced */
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     position: relative;
-    min-width: 0; 
+    
+    /* Prevent flex children from collapsing or overflowing */
+    min-width: 0;
 }
 
-/* [좌측 사이드바] */
+/* --- Left Sidebar --- */
 .sidebar {
-    width: 260px;
-    background-color: #002F6C;
-    color: white;
+    width: var(--sidebar-width);
+    background-color: var(--primary-color);
+    color: var(--text-white);
     padding: 25px 18px;
+    
     display: flex;
     flex-direction: column;
-    flex-shrink: 0; 
+    flex-shrink: 0; /* Prevent shrinking */
     overflow: hidden;
     z-index: 10;
 }
@@ -48,20 +91,66 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+    color: var(--text-white);
     text-decoration: none;
 }
 
-.menu-section { flex: 1; overflow-y: auto; /* 메뉴 많으면 스크롤 */ }
+.menu-section {
+    flex: 1;
+    overflow-y: auto;
+}
 
 .menu-section h3 {
     font-size: 11px;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
     text-transform: uppercase;
     margin-bottom: 10px;
     letter-spacing: 1px;
 }
 
+/* --- Right Chat Section --- */
+.chat-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-white);
+    
+    /* Crucial for nested flex layouts to handle overflow correctly */
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.chat-header {
+    padding: 18px 30px;
+    border-bottom: 1px solid #eee;
+    background-color: var(--bg-white);
+    flex-shrink: 0;
+}
+
+.chat-header h2 { margin: 0; font-size: 18px; color: var(--text-main); }
+.chat-header p { margin: 4px 0 0; font-size: 13px; color: var(--text-sub); }
+
+.chat-box {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: var(--bg-chat);
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    
+    /* Smooth scrolling for iOS */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* -------------------------------------------------------------------------
+   3. Components
+   ------------------------------------------------------------------------- */
+
+/* Navigation Links */
 .nav-links {
     display: flex;
     flex-direction: column;
@@ -73,167 +162,188 @@ body {
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255, 255, 255, 0.85);
     padding: 10px 12px;
     border-radius: 10px;
     font-size: 13.5px;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
 }
+
 .nav-item:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
     transform: translateX(3px);
 }
 
-/* 사이드바 하단 */
+/* Footer Area (Auth & Contact) */
 .sidebar-footer {
     margin-top: auto;
     padding-top: 15px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    background-color: #002F6C; /* 배경색 명시 */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: var(--primary-color);
 }
 
 .footer-btn {
     background: none;
-    border: 1px solid rgba(255,255,255,0.3);
-    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--text-white);
     padding: 10px;
-    border-radius: 8px;
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
     font-size: 13px;
     transition: 0.2s;
     text-align: center;
     width: 100%;
 }
-.footer-btn:hover { background-color: white; color: #002F6C; }
 
+.footer-btn:hover {
+    background-color: var(--bg-white);
+    color: var(--primary-color);
+}
+
+/* User Profile Card */
 .user-profile {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     padding: 12px;
     border-radius: 10px;
     text-align: center;
     margin-bottom: 8px;
 }
+
 .user-profile img {
     width: 45px; height: 45px;
-    border-radius: 50%; border: 2px solid white; margin-bottom: 5px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-white);
+    margin-bottom: 5px;
 }
 
-/* [우측 채팅 섹션] */
-.chat-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    min-width: 0; 
-    width: 100%;
-    height: 100%; /* 높이 꽉 채우기 */
-}
-
-.chat-header {
-    padding: 18px 30px;
-    border-bottom: 1px solid #eee;
-    background-color: white;
-    flex-shrink: 0; 
-}
-.chat-header h2 { margin: 0; font-size: 18px; color: #333; }
-.chat-header p { margin: 4px 0 0; font-size: 13px; color: #888; }
-
-.chat-box {
-    flex: 1;
-    padding: 20px; /* 모바일 여백 축소 */
-    overflow-y: auto;
-    background-color: #F8F9FA;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    
-    /* [중요] iOS 스크롤 튕김 효과 */
-    -webkit-overflow-scrolling: touch; 
-}
-
+/* Chat Messages */
 .message {
-    max-width: 85%; /* 모바일에서 조금 더 넓게 */
+    max-width: 85%;
     padding: 12px 18px;
-    border-radius: 18px;
+    border-radius: var(--border-radius-md);
     font-size: 15px;
     line-height: 1.5;
     word-break: break-word;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
 }
-.bot { 
-    background-color: white; 
-    border-top-left-radius: 2px; 
-    color: #333; 
-    margin-right: auto;
-}
-.user { 
-    background-color: #002F6C; 
-    border-top-right-radius: 2px; 
-    color: white; 
-    margin-left: auto;
-}
-.bot::before { content: "🤖 MJU AI"; display: block; font-size: 11px; color: #002F6C; font-weight: bold; margin-bottom: 5px; }
 
-/* 마크다운 스타일 */
-.message a { color: #007AFF; font-weight: bold; text-decoration: none; }
+.bot {
+    background-color: var(--bg-white);
+    border-top-left-radius: 2px;
+    color: var(--text-main);
+    margin-right: auto; /* Align Left */
+}
+
+.user {
+    background-color: var(--primary-color);
+    border-top-right-radius: 2px;
+    color: var(--text-white);
+    margin-left: auto; /* Align Right */
+}
+
+.bot::before {
+    content: "🤖 MJU AI";
+    display: block;
+    font-size: 11px;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+/* Markdown Content Styling */
+.message a { color: var(--accent-color); font-weight: 700; text-decoration: none; }
 .message ul { padding-left: 20px; margin: 5px 0; }
 .message p { margin: 0 0 8px 0; }
 .message p:last-child { margin: 0; }
 
-/* 입력 영역 */
+/* Input Area */
 .input-area {
-    padding: 15px; /* 좌우 여백 줄임 */
-    background-color: white;
+    padding: 15px;
+    background-color: var(--bg-white);
     border-top: 1px solid #eee;
+    
     display: flex;
     gap: 10px;
     align-items: center;
     flex-shrink: 0;
     width: 100%;
     
-    /* [안전 영역] 아이폰 하단 바 대응 */
-    padding-bottom: calc(15px + env(safe-area-inset-bottom)); 
+    /* Respect safe area for devices with home indicator (iPhone X+) */
+    padding-bottom: calc(15px + env(safe-area-inset-bottom));
 }
+
 input {
     flex: 1;
     padding: 12px 20px;
     border-radius: 30px;
     border: 1px solid #ddd;
-    font-size: 16px; /* 16px 이상이어야 iOS 자동확대 방지됨 */
+    /* Font size 16px prevents iOS zoom-on-focus */
+    font-size: 16px;
     outline: none;
-    background: #F8F9FA;
+    background: var(--bg-chat);
+    transition: border-color 0.2s;
 }
-input:focus { border-color: #002F6C; background: white; }
+
+input:focus {
+    border-color: var(--primary-color);
+    background: var(--bg-white);
+}
 
 .send-btn {
     width: 45px; height: 45px;
     border-radius: 50%;
-    background-color: #002F6C;
+    background-color: var(--primary-color);
     border: none;
-    color: white;
+    color: var(--text-white);
     cursor: pointer;
+    
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.2s;
+    transition: transform 0.2s;
     flex-shrink: 0;
 }
+
 .send-btn:hover { transform: scale(1.1); }
 .send-icon { width: 18px; height: 18px; fill: white; margin-left: 2px; }
 
-/* 로딩 애니메이션 */
-.typing-indicator { display: none; padding: 12px 18px; background: white; border-radius: 18px; border-top-left-radius: 2px; width: fit-content; margin-bottom: 20px; }
-.dot { height: 7px; width: 7px; background: #bbb; border-radius: 50%; display: inline-block; animation: bounce 1.3s infinite; }
-.dot:nth-child(2) { animation-delay: 0.2s; } .dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+/* -------------------------------------------------------------------------
+   4. Utilities & Animations
+   ------------------------------------------------------------------------- */
+.typing-indicator {
+    display: none;
+    padding: 12px 18px;
+    background: var(--bg-white);
+    border-radius: 18px;
+    border-top-left-radius: 2px;
+    width: fit-content;
+    margin-bottom: 20px;
+}
 
+.dot {
+    height: 7px; width: 7px;
+    background: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.3s infinite;
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
 
-
-/* --- [모바일 반응형 핵심 수정] --- */
+/* -------------------------------------------------------------------------
+   5. Responsive Design (Mobile)
+   ------------------------------------------------------------------------- */
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -242,35 +352,44 @@ input:focus { border-color: #002F6C; background: white; }
     cursor: pointer;
     padding: 0;
     margin-right: 15px;
-    color: #333;
+    color: var(--text-main);
 }
 
 @media (max-width: 768px) {
-    /* 1. 모바일에서는 높이를 dvh(실제 보이는 높이)로 강제 */
+    /* Force full viewport height on mobile */
     .main-layout {
         width: 100%;
-        height: 100dvh; /* [핵심] 주소창 제외한 실제 높이 */
+        height: 100dvh;
         border-radius: 0;
         box-shadow: none;
     }
     
-    /* 2. 사이드바도 dvh 기준 */
+    /* Convert Sidebar to Drawer Menu */
     .sidebar {
         position: absolute;
-        left: 0; top: 0; 
-        height: 100dvh; /* [핵심] */
+        left: 0; top: 0;
+        height: 100dvh; /* Full height */
         width: 280px;
         z-index: 1000;
+        
+        /* Hidden by default */
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     }
+    
     .sidebar.active { transform: translateX(0); }
     
+    /* Overlay Background */
     .overlay {
-        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.5); z-index: 900;
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 900;
     }
+    
     .overlay.active { display: block; }
     
     .mobile-menu-btn { display: block; }
