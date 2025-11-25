@@ -1,4 +1,4 @@
-/* static/style.css */
+/* static/style.css - Layout Fix Version */
 
 /* [기본 설정] */
 * { box-sizing: border-box; }
@@ -6,35 +6,38 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #eef1f5;
     margin: 0;
-    height: 100vh;
+    height: 100vh; /* 화면 전체 높이 */
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; 
+    overflow: hidden; /* 스크롤 방지 */
 }
 
 /* [메인 레이아웃] */
 .main-layout {
     display: flex;
     width: 1200px;
-    height: 85vh;
+    height: 85vh; /* 화면 높이의 85% */
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     overflow: hidden;
     position: relative;
+    /* [중요] flex 자식들이 찌그러지지 않도록 설정 */
+    min-width: 0; 
 }
 
-/* [좌측 사이드바 - 컴팩트 모드] */
+/* [좌측 사이드바] */
 .sidebar {
-    width: 260px;
+    width: 260px; /* 고정 너비 */
     background-color: #002F6C; /* 명지대 네이비 */
     color: white;
     padding: 25px 18px;
     display: flex;
     flex-direction: column;
-    flex-shrink: 0; 
+    flex-shrink: 0; /* 절대 줄어들지 않음 */
     overflow: hidden;
+    z-index: 10;
 }
 
 .brand {
@@ -114,44 +117,61 @@ body {
     border-radius: 50%; border: 2px solid white; margin-bottom: 5px;
 }
 
-/* [우측 채팅 섹션] */
+/* [우측 채팅 섹션 - 여기가 문제였습니다!] */
 .chat-section {
-    flex: 1;
+    flex: 1; /* 남은 공간 모두 차지 */
     display: flex;
     flex-direction: column;
     background-color: white;
-    min-width: 0; 
+    min-width: 0; /* [핵심 수정] flex 자식의 최소 너비를 0으로 설정하여 넘침 방지 */
+    position: relative;
+    width: 100%; /* 너비 강제 확장 */
 }
 
 .chat-header {
     padding: 18px 30px;
     border-bottom: 1px solid #eee;
     background-color: white;
+    flex-shrink: 0; /* 헤더 높이 고정 */
 }
 .chat-header h2 { margin: 0; font-size: 18px; color: #333; }
 .chat-header p { margin: 4px 0 0; font-size: 13px; color: #888; }
 
 .chat-box {
-    flex: 1;
+    flex: 1; /* 남은 높이 모두 차지 */
     padding: 30px;
     overflow-y: auto;
     background-color: #F8F9FA;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%; /* [핵심 수정] 가로 꽉 차게 */
 }
 
 .message {
-    max-width: 75%;
+    max-width: 75%; /* 말풍선 최대 너비 */
+    min-width: 20%; /* 너무 작아지지 않게 */
     padding: 12px 18px;
     border-radius: 18px;
     font-size: 15px;
     line-height: 1.5;
-    word-break: break-word;
+    word-break: break-word; /* 긴 단어 줄바꿈 */
     box-shadow: 0 2px 5px rgba(0,0,0,0.03);
 }
-.bot { background-color: white; border-top-left-radius: 2px; color: #333; }
-.user { background-color: #002F6C; border-top-right-radius: 2px; color: white; align-self: flex-end; }
+.bot { 
+    background-color: white; 
+    border-top-left-radius: 2px; 
+    color: #333; 
+    align-self: flex-start; /* 왼쪽 정렬 */
+    margin-right: auto; /* 우측 여백 확보 */
+}
+.user { 
+    background-color: #002F6C; 
+    border-top-right-radius: 2px; 
+    color: white; 
+    align-self: flex-end; /* 오른쪽 정렬 */
+    margin-left: auto; /* 좌측 여백 확보 */
+}
 .bot::before { content: "🤖 MJU AI"; display: block; font-size: 11px; color: #002F6C; font-weight: bold; margin-bottom: 5px; }
 
 /* 마크다운 스타일 */
@@ -168,6 +188,8 @@ body {
     display: flex;
     gap: 12px;
     align-items: center;
+    flex-shrink: 0; /* 높이 고정 */
+    width: 100%; /* 가로 꽉 차게 */
 }
 input {
     flex: 1;
@@ -204,3 +226,42 @@ input:focus { border-color: #002F6C; background: white; }
 
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+
+/* --- 모바일 반응형 --- */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 15px;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .main-layout {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .sidebar {
+        position: absolute;
+        left: 0; top: 0; height: 100%; width: 280px;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    .sidebar.active { transform: translateX(0); }
+    .overlay {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5); z-index: 900;
+    }
+    .overlay.active { display: block; }
+    .mobile-menu-btn { display: block; }
+    .chat-header { padding: 15px; }
+    .input-area { padding: 10px 15px; }
+}

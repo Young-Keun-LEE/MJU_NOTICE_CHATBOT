@@ -56,3 +56,14 @@ function scrollToBottom() {
 function escapeHtml(text) {
     return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
+
+/* static/script.js 맨 아래에 추가 */
+
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.overlay');
+    
+    // active 클래스를 넣었다 뺐다 함 (CSS가 알아서 애니메이션 처리)
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+}

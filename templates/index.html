@@ -13,7 +13,10 @@
 </head>
 <body>
 
+<div class="overlay" onclick="toggleSidebar()"></div>
+
 <div class="main-layout">
+    
     <div class="sidebar">
         <div>
             <a href="/" class="brand">🎓 MJU AI Assistant</a>
@@ -49,9 +52,15 @@
     </div>
 
     <div class="chat-section">
+        
         <div class="chat-header">
-            <h2>실시간 공지사항 봇</h2>
-            <p>궁금한 공지사항을 물어보면 홈페이지에서 찾아올게요!</p>
+            <div style="display: flex; align-items: center;">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                <div>
+                    <h2>실시간 공지사항 봇</h2>
+                    <p>궁금한 공지사항을 물어보면 홈페이지에서 찾아올게요!</p>
+                </div>
+            </div>
         </div>
 
         <div class="chat-box" id="chat-box">
@@ -72,15 +81,23 @@
         </div>
 
         <div class="input-area">
-            <input type="text" id="user-input" placeholder="질문을 입력하세요..." autocomplete="off" onkeypress="if(event.keyCode==13) sendMessage()">
+            <input type="text" id="user-input" placeholder="질문을 입력하세요... (예: 장학금 공지 보여줘)" autocomplete="off" onkeypress="if(event.keyCode==13) sendMessage()">
             <button onclick="sendMessage()" class="send-btn" id="send-btn">
                 <svg class="send-icon" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
             </button>
         </div>
-    </div>
-</div>
 
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+    </div> </div> <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script>
+    // 사이드바 토글 함수 (모바일용)
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+</script>
 
 </body>
 </html>
