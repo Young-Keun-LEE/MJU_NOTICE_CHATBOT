@@ -80,7 +80,7 @@
                 </button>
             {% endif %}
             
-            <button class="footer-btn" onclick="alert('문의 메일: justdanny1216@gmail.com')" aria-label="Contact Developer">
+            <button class="footer-btn" onclick="openModal()" aria-label="Contact Developer">
                 👨‍💻 개발자 문의하기
             </button>
         </div>
@@ -136,6 +136,29 @@
         </div>
 
     </main> 
+</div>
+
+<div id="contact-modal" class="modal-overlay" aria-hidden="true" onclick="closeModal(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>📬 개발팀에게 의견 보내기</h3>
+            <button class="close-btn" onclick="closeModal(event)">×</button>
+        </div>
+        <div class="modal-body">
+            <p>사용 중 불편한 점이나 추가하고 싶은 기능이 있다면<br>언제든지 편하게 말씀해 주세요! 😊</p>
+            
+            <div class="email-box">
+                <span class="label">Email:</span>
+                <strong id="dev-email">justdanny1216@gmail.com</strong>
+                <button class="copy-btn" onclick="copyEmail()">복사</button>
+            </div>
+            
+            <p class="sub-text">명지대 학우분의 소중한 의견을 기다립니다.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="confirm-btn" onclick="closeModal(event)">확인</button>
+        </div>
+    </div>
 </div>
 
 <!-- Main Application Script -->

@@ -109,3 +109,76 @@ function toggleSidebar() {
         overlay.classList.toggle('active');
     }
 }
+
+/**
+ * -------------------------------------------------------------------------
+ * Modal Logic (Contact Developer)
+ * -------------------------------------------------------------------------
+ */
+
+/**
+ * Opens the contact modal with a fade-in animation.
+ * Sets display to flex first, then adds the 'show' class for the transition.
+ */
+function openModal() {
+    const modal = document.getElementById('contact-modal');
+    modal.style.display = 'flex';
+    
+    // Slight delay required for the browser to register the display change before animating
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+}
+
+/**
+ * Closes the contact modal.
+ * Triggered by clicking the overlay, close button, or confirm button.
+ * * @param {Event} event - The click event object.
+ */
+function closeModal(event) {
+    const modal = document.getElementById('contact-modal');
+    
+    // Close only if clicked on Overlay, Close Button, or Confirm Button
+    if (
+        event.target === modal || 
+        event.target.closest('.close-btn') || 
+        event.target.closest('.confirm-btn')
+    ) {
+        modal.classList.remove('show');
+        
+        // Wait for the CSS transition (0.3s) to finish before hiding
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+}
+
+/**
+ * Copies the developer email to the clipboard.
+ * Provides visual feedback by temporarily changing the button text and color.
+ */
+function copyEmail() {
+    const emailText = document.getElementById('dev-email').innerText;
+    
+    navigator.clipboard.writeText(emailText).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        const originalText = btn.innerText;
+        
+        // Update button style to indicate success
+        btn.innerText = '완료!';
+        btn.style.backgroundColor = '#28a745'; // Green
+        btn.style.color = '#fff';
+        btn.style.borderColor = '#28a745';
+        
+        // Restore original button state after 1.5 seconds
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.backgroundColor = '';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+        }, 1500);
+    }).catch(err => {
+        console.error('Copy failed:', err);
+        alert('이메일 복사에 실패했습니다.');
+    });
+}

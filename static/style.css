@@ -395,3 +395,107 @@ input:focus {
     .mobile-menu-btn { display: block; }
     .chat-header { padding: 15px; }
 }
+
+/* -------------------------------------------------------------------------
+   6. Custom Modal (Contact Developer)
+   ------------------------------------------------------------------------- */
+.modal-overlay {
+    display: none; /* 기본 숨김 */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    z-index: 2000; /* 사이드바(z-index: 1000)보다 위에 표시 */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: var(--bg-white);
+    width: 90%; max-width: 400px;
+    padding: 24px;
+    border-radius: var(--border-radius-lg); /* 기존 변수 활용 */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 쫀득한 느낌 */
+    text-align: center;
+}
+
+.modal-overlay.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h3 {
+    margin: 0; font-size: 18px; color: var(--primary-color);
+}
+
+.close-btn {
+    background: none; border: none;
+    font-size: 24px; color: #999; cursor: pointer;
+}
+
+.modal-body p {
+    color: var(--text-main); font-size: 15px; line-height: 1.5; margin-bottom: 15px;
+}
+
+.modal-body .sub-text {
+    font-size: 13px; color: var(--text-sub); margin-top: 15px;
+}
+
+/* 이메일 박스 디자인 */
+.email-box {
+    background: var(--bg-body);
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    margin: 15px 0;
+}
+
+.email-box strong { color: var(--primary-color); }
+
+.copy-btn {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.copy-btn:hover {
+    background: var(--primary-color);
+    color: #fff; border-color: var(--primary-color);
+}
+
+.confirm-btn {
+    width: 100%;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.confirm-btn:hover { background: var(--primary-hover); }
