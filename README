@@ -1,73 +1,42 @@
-🎓 MJU AI Assistant: Real-Time University Notice Agent
+# 🎓 MJU AI Assistant: Real-Time University Notice Agent
 
-Project Overview
+## Overview
+The **MJU AI Assistant** is a real-time, conversational chatbot that retrieves academic, scholarship, and career notices directly from the Myongji University website.  
+It combines **Gemini 1.5 Flash**, **local tool execution**, and **modern full-stack engineering** to deliver fast, accurate, and student-friendly results.
 
-The MJU AI Assistant is a real-time, conversational application designed to help Myongji University students quickly access crucial academic, scholarship, and career notices directly from the university website. It uses Gemini's Function Calling capability to dynamically execute a local web crawler tool based on user intent, providing highly specific and up-to-date information instantly.
+---
 
-This project demonstrates a robust, production-ready full-stack architecture focusing on performance, scalability, and modern user experience.
+## 🚀 Key Features
 
-Key Technical Features
+### 1. Intelligent Notice Retrieval (Agentic Function Calling)
+- Integrates **Google Gemini 2.5 Flash API** for natural language understanding  
+- Dynamically maps vague user queries → precise notice board IDs  
+- Executes a custom Python function (`get_mju_notices`) via Gemini’s tool-calling  
+- Reliable intent resolution using keyword-based mapping logic  
 
-This project highlights several professional engineering practices:
+### 2. High-Performance Backend Architecture
+- Removed MCP subprocess overhead → eliminates cold-start latency  
+- Crawler runs **directly inside Flask**, resulting in near-zero delay  
+- Robust HTML parsing with `requests` + `BeautifulSoup4`  
+- Refactored `crawler.py` for production-ready stability  
 
-1. Agentic Workflow via Function Calling
+### 3. Full-Stack Features & Deployment
+- Secure **Google OAuth 2.0** login (Authlib)  
+- Clean separation of Python, HTML5, CSS, JS  
+- Fully containerized and deployed on **Render (gunicorn)**  
+- Architecture designed for scalability and maintainability  
 
-LLM Integration: Utilizes the Google Gemini 1.5 Flash API to interpret natural language queries (e.g., "Tell me about scholarships").
+### 4. Responsive & Polished UI/UX
+- Desktop dashboard optimized for clarity  
+- Mobile-first layout using `dvh` for proper toolbar/safe-area handling  
+- Custom modal (no native `alert()` pop-ups)  
+- Styled using MJU’s official navy blue palette  
 
-Dynamic Tool Use: The LLM dynamically selects the appropriate notice board ID (255, 257, 259, etc.) from the user's intent and passes it to the custom Python tool (get_mju_notices).
+---
 
-Intent Resolution: Implemented robust keyword-to-ID mapping logic in Python to accurately resolve vague user requests into specific URL codes, ensuring high reliability.
+## ⚙️ Local Setup
 
-2. High-Performance Local Tool Integration
-
-Architecture Refactor: Successfully resolved critical "Cold Start Latency" issues inherent in subprocess-based MCP (Model Context Protocol) solutions.
-
-Zero-Overhead Execution: Refactored the web scraping module (crawler.py) for direct, local execution within the Flask server process, dramatically reducing response time by eliminating process forking overhead.
-
-Robust Web Scraping: Uses requests and BeautifulSoup4 for reliable, fast fetching and clean parsing of specific, complex HTML structures.
-
-3. Full-Stack Features & Deployment
-
-Professional Authentication: Implemented secure Google OAuth 2.0 login using the Authlib library, managing user sessions and profile information.
-
-Deployment: Fully containerized and deployed on Render (Python/gunicorn runtime) for continuous, free cloud hosting.
-
-Code Quality: Applied English Type Hinting (Python), Semantic HTML5, and separated CSS/JS for high maintainability and readability (a core principle for collaborative development).
-
-4. Responsive UI/UX Design
-
-Desktop Dashboard: Utilizes a clean, split-screen dashboard layout with Quick Links, styled using the MJU navy blue official colors.
-
-Mobile-First Design: Achieved perfect mobile compatibility using the dvh (Dynamic Viewport Height) unit and CSS media queries, correctly handling mobile toolbars and safe areas.
-
-Custom UI Components: Created a professional custom modal for developer contact, replacing disruptive native browser alerts.
-
-🏗️ Architecture Diagram (LLM-Tool Flow)
-
-The system is designed around fast, local tool execution:
-
-User Input (Frontend)
-
-Flask Backend (app.py): Receives POST request.
-
-Gemini API: Reads user message + Tool Definition.
-
-Tool Execution: Gemini determines the board ID ("257" for Academic) and calls the local Python function call_crawler_tool(category='257').
-
-Local Crawler: Python runs get_mju_notices('257'), fetches data from the MJU website, and returns a clean JSON/text list.
-
-Gemini API: Uses the list to generate a summarized, markdown response.
-
-Frontend: Receives markdown and renders it beautifully (with clickable links).
-
-⚙️ Local Setup and Installation
-
-Prerequisites
-
-Python 3.10+
-
-Node.js & npm (for npx during initial tool development)
-
-A Google Gemini API Key
-
-A Google OAuth 2.0 Client ID and Secret
+### Prerequisites
+- Python 3.10+
+- Google Gemini API Key
+- Google OAuth 2.0 Client ID & Secret
